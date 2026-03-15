@@ -94,6 +94,155 @@
   }
 }
 
+//Process Stepper區塊，目的:增加視覺趣味與信任感
+.process-stepper {
+  background: #eef0fc;
+  padding: 100px 20px;
+}
+
+.process-stepper__container {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.process-stepper__header {
+  text-align: center;
+  margin-bottom: 70px;
+}
+
+.process-stepper__subtitle {
+  display: block;
+  font-size: 12px;
+  letter-spacing: 0.35rem;
+  text-transform: uppercase;
+  color: #888;
+  margin-bottom: 12px;
+}
+
+.process-stepper__title {
+  font-weight: 300;
+  letter-spacing: 0.5rem;
+  color: #1a1a1a;
+  font-size: 28px;
+}
+
+.process-stepper__stepper {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+}
+
+//中間線
+.process-stepper__line {
+  position: absolute;
+  top: 25px;
+  left: 8%;
+  right: 8%;
+  height: 1px;
+  background: #e0e0e0;
+  z-index: 0;
+}
+
+.process-stepper__step {
+  flex: 1;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+  padding: 0 10px;
+
+  transition: transform 0.4s ease;
+
+  &:hover {
+    transform: translateY(-10px); // 滑鼠移入時輕微浮起
+
+    .process-stepper__circle {
+      border-color: $third; // 圓圈變色
+      background: $third;
+      color: #fff;
+      transform: scale(1.1);
+    }
+  }
+}
+
+.process-stepper__circle {
+  width: 50px;
+  height: 50px;
+
+  margin: 0 auto 18px;
+
+  border-radius: 50%;
+  border: 1px solid transparent;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-family: serif;
+  font-size: 18px;
+
+  background: $accent;
+
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+
+  transition: all 0.3s ease; // 讓變色更平滑
+}
+
+.process-stepper__step-title {
+  font-size: 15px;
+  letter-spacing: 0.2rem;
+  margin-bottom: 8px;
+  color: #1a1a1a;
+}
+
+.process-stepper__step-desc {
+  font-size: 14px;
+  color: #6c757d;
+  line-height: 1.7;
+  max-width: 220px;
+  margin: 0 auto;
+}
+
+/* -------------------------------*/
+/*  Process Stepper Mobile Version */
+/* ------------------------------ */
+
+@media (max-width: 768px) {
+  .process-stepper__stepper {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .process-stepper__line {
+    top: 0;
+    bottom: 0;
+    left: 25px;
+    right: auto;
+    width: 1px;
+    height: auto;
+  }
+
+  .process-stepper__step {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 40px;
+    text-align: left;
+  }
+
+  .process-stepper__circle {
+    margin: 0 20px 0 0;
+    flex-shrink: 0;
+  }
+
+  .process-stepper__step-title {
+    font-size: 15px;
+  }
+
+  .process-stepper__step-desc {
+    margin: 0;
+    max-width: none;
+  }
+}
+
 //Brand Intro區塊，目的:建立品牌調性
 .brand-intro {
   display: flex;

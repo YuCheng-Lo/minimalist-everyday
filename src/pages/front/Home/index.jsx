@@ -7,6 +7,15 @@ const Home = () => {
 
   const navigate = useNavigate();
 
+  const steps = [
+    { title: "品味挑選", desc: "走訪世界各地，為您精選最有溫度的極簡物件。" },
+    {
+      title: "細心包裝",
+      desc: "採用環境友善材質，確保每一份期待都能優雅抵達。",
+    },
+    { title: "光速送達", desc: "專屬宅配物流，讓質感生活無需長時等待。" },
+  ];
+
   return (
     <div>
       <div className={styles.hero}>
@@ -24,6 +33,41 @@ const Home = () => {
           </button>
         </div>
       </div>
+
+      <section className={styles["process-stepper"]}>
+        <div className={styles["process-stepper__container"]}>
+          {/* Title */}
+          <div className={styles["process-stepper__header"]}>
+            <span className={styles["process-stepper__subtitle"]}>
+              Quality Assurance
+            </span>
+            <h2 className={styles["process-stepper__title"]}>
+              精心挑選，只為日常
+            </h2>
+          </div>
+
+          {/* Stepper */}
+          <div className={styles["process-stepper__stepper"]}>
+            <div className={styles["process-stepper__line"]}></div>
+
+            {steps.map((step, index) => (
+              <div key={index} className={styles["process-stepper__step"]}>
+                <div className={styles["process-stepper__circle"]}>
+                  {index + 1}
+                </div>
+
+                <h4 className={styles["process-stepper__step-title"]}>
+                  {step.title}
+                </h4>
+
+                <p className={styles["process-stepper__step-desc"]}>
+                  {step.desc}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
 
       <section className={styles["brand-intro"]}>
         <h3 className={styles["brand-intro__title"]}>拾取時光中的細碎美好</h3>
