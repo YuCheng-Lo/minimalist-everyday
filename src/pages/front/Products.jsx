@@ -1,5 +1,5 @@
-import axiosInstance from "../../services/axiosInstance";
 import Pagination from "../../components/Pagination";
+import { frontendProductsApi } from "../../services/frontendProductService";
 import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { addToCartAsync } from "../../slices/cartSlice";
@@ -8,7 +8,6 @@ import { showAsyncMessage } from "../../slices/messageSlice";
 import { Oval } from "react-loader-spinner";
 
 const Products = () => {
-  const path = import.meta.env.VITE_PATH;
   const navigate = useNavigate();
 
   const { loadingItemId } = useSelector((state) => state.cart);
@@ -25,9 +24,7 @@ const Products = () => {
     async (page = 1) => {
       setIsLoading(true); //開始載入
       try {
-        const res = await axiosInstance.get(
-          `/api/${path}/products?page=${page}`,
-        );
+        const res = await frontendProductsApi.getProducts(page);
 
         setProducts(res.data.products);
         setPagination(res.data.pagination);
@@ -44,7 +41,7 @@ const Products = () => {
         setIsLoading(false); //載入完成
       }
     },
-    [path, dispatch],
+    [dispatch],
   );
 
   const onPageChange = (page) => {
