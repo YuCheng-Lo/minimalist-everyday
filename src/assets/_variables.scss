@@ -1,6 +1,30 @@
+// Brand Colors
 $primary: #748be7;
 $secondary: #0c4169;
 $third: #2c3e50;
 
-//強調色
+//強調色(Accent)
 $accent: #e6b84e;
+
+// Text
+$text-primary: #1a1a1a;
+$text-secondary: #6c757d;
+$text-body: rgba(33, 37, 41, 0.75);
+$text-muted: #888;
+$text-inverse: #ffffff;
+
+// Border
+$border-primary: #1a1a1a;
+$border-light: #ddd;
+
+// Background
+$bg-light: #fdfdfd;
+$bg-soft: #eef0fc;
+
+//分隔線（divider）
+$divider: #e0e0e0;
+
+// Shadow
+$shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.05);
+$shadow-md: 0 4px 10px rgba(0, 0, 0, 0.08);
+$shadow-lg: 0 6px 18px rgba(0, 0, 0, 0.1);
