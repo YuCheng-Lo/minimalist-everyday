@@ -8,12 +8,11 @@ import Checkout from "../pages/front/Checkout";
 import Login from "../pages/Login";
 import PrivacyPolicy from "../pages/PrivacyPolicy";
 import NotFound from "../pages/NotFound";
-import axiosInstance from "../services/axiosInstance";
 
 import AdminLayout from "../layouts/AdminLayout";
 import AdminProducts from "../pages/admin/AdminProducts";
 
-const path = import.meta.env.VITE_PATH;
+import { frontendProductsApi } from "../services/frontendProductService";
 
 const routes = [
   {
@@ -33,9 +32,7 @@ const routes = [
         element: <ProductDetail />,
         errorElement: <ProductError />,
         loader: async ({ params }) => {
-          const res = await axiosInstance.get(
-            `/api/${path}/product/${params.id}`,
-          );
+          const res = await frontendProductsApi.getProduct(params.id);
 
           if (!res.data.product) {
             throw new Response("Product Not Found", { status: 404 });
