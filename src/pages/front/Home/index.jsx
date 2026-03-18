@@ -1,42 +1,47 @@
+import { useEffect, useState } from "react";
 import styles from "./style.module.scss";
 import { useNavigate, Link } from "react-router-dom";
+import { frontendProductsApi } from "../../../services/frontendProductService";
+import { useDispatch } from "react-redux";
+import { showAsyncMessage } from "../../../slices/messageSlice";
 
 const Home = () => {
+  const dispatch = useDispatch();
+
   const heroImg =
     "https://images.unsplash.com/photo-1638454668466-e8dbd5462f20?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
 
   const navigate = useNavigate();
 
-  const products = [
-    {
-      title: "香氛蠟燭",
-      price: 290,
-      origin_price: 350,
-      imageUrl:
-        "https://images.unsplash.com/photo-1619695662967-3e739a597f47?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fHNjZW50ZWQlMjBjYW5kbGV8ZW58MHx8MHx8fDI%3D",
-    },
-    {
-      title: "頭戴式無線耳機",
-      price: 4990,
-      origin_price: 5490,
-      imageUrl:
-        "https://images.unsplash.com/photo-1690203262675-920838685913?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDIyfHx8ZW58MHx8fHx8",
-    },
-    {
-      title: "白色陶瓷馬克杯",
-      price: 99,
-      origin_price: 150,
-      imageUrl:
-        "https://images.unsplash.com/photo-1661399086686-20ce9ecd398b?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    },
-    {
-      title: "小質感筆記本",
-      price: 25,
-      origin_price: 39,
-      imageUrl:
-        "https://images.unsplash.com/photo-1566355923884-14f672712e47?q=80&w=2012&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    },
-  ];
+  const [isLoading, setIsLoading] = useState(true);
+
+  const [popularProducts, setPopularProducts] = useState([]);
+
+  useEffect(() => {
+    const getPopularProducts = async () => {
+      setIsLoading(true);
+      try {
+        const res = await frontendProductsApi.getProducts();
+
+        const top4 = res.data.products.slice(0, 4);
+
+        setPopularProducts(top4);
+      } catch {
+        dispatch(
+          showAsyncMessage({
+            id: crypto.randomUUID(),
+            type: "danger",
+            title: "載入失敗",
+            text: "無法取得熱門商品，請重新整理頁面",
+          }),
+        );
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    getPopularProducts();
+  }, [dispatch]);
 
   const steps = [
     { title: "品味挑選", desc: "走訪世界各地，為您精選最有溫度的極簡物件。" },
@@ -77,35 +82,60 @@ const Home = () => {
 
           {/* 商品格子 */}
           <div className={styles["popular-products__grid"]}>
-            {products.map((product, index) => (
-              <div key={index} className={styles["popular-products__item"]}>
-                <div className={styles["popular-products__item-img"]}>
-                  {product.price < product.origin_price && (
-                    <span className={styles["popular-products__badge"]}>
-                      SALE
-                    </span>
-                  )}
-                  <img
-                    src={product.imageUrl}
-                    alt={product.title}
-                    loading="lazy"
-                  />
-                </div>
+            {isLoading
+              ? Array(4)
+                  .fill(0)
+                  .map((_, index) => (
+                    <div
+                      key={index}
+                      className={styles["popular-products__item"]}
+                    >
+                      <div className={styles["skeleton-img"]}></div>
 
-                <h4 className={styles["popular-products__item-name"]}>
-                  {product.title}
-                </h4>
+                      <div className={styles["skeleton-text"]}></div>
 
-                <div className={styles["popular-products__item-price-wrapper"]}>
-                  <p className={styles["popular-products__item-origin-price"]}>
-                    NT${product.origin_price}
-                  </p>
-                  <p className={styles["popular-products__item-price"]}>
-                    NT${product.price}
-                  </p>
-                </div>
-              </div>
-            ))}
+                      <div className={styles["skeleton-price"]}></div>
+                    </div>
+                  ))
+              : popularProducts.map((product) => (
+                  <Link
+                    key={product.id}
+                    to={`/products/${product.id}`}
+                    className={styles["popular-products__item"]}
+                  >
+                    <div className={styles["popular-products__item-img"]}>
+                      {product.price < product.origin_price && (
+                        <span className={styles["popular-products__badge"]}>
+                          SALE
+                        </span>
+                      )}
+                      <img
+                        src={product.imageUrl}
+                        alt={product.title}
+                        loading="lazy"
+                      />
+                    </div>
+
+                    <h4 className={styles["popular-products__item-name"]}>
+                      {product.title}
+                    </h4>
+
+                    <div
+                      className={styles["popular-products__item-price-wrapper"]}
+                    >
+                      <p
+                        className={
+                          styles["popular-products__item-origin-price"]
+                        }
+                      >
+                        NT${product.origin_price}
+                      </p>
+                      <p className={styles["popular-products__item-price"]}>
+                        NT${product.price}
+                      </p>
+                    </div>
+                  </Link>
+                ))}
           </div>
 
           <div className={styles["popular-products__footer"]}>
