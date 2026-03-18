@@ -6,7 +6,7 @@ import "bootstrap/dist/js/bootstrap.bundle.min.js"; // 行為 / 互動
 
 import { createHashRouter, RouterProvider } from "react-router-dom";
 import routes from "./routes";
-import "./api/axiosSetup";
+import "./services/axiosSetup";
 import { Provider } from "react-redux";
 import { store } from "./store";
 
