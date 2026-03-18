@@ -6,4 +6,8 @@ export const frontendProductsApi = {
   getProducts: (page = 1) => {
     return axiosInstance.get(`/api/${path}/products?page=${page}`);
   },
+
+  getProduct: (id) => {
+    return axiosInstance.get(`/api/${path}/product/${id}`);
+  },
 };
