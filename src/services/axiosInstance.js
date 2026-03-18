@@ -1,6 +1,10 @@
 import axios from "axios";
 
-axios.interceptors.request.use((config) => {
+const axiosInstance = axios.create({
+  baseURL: import.meta.env.VITE_URL,
+});
+
+axiosInstance.interceptors.request.use((config) => {
   const token = document.cookie
     .split("; ")
     .find((row) => row.startsWith("hexToken="))
@@ -9,7 +13,7 @@ axios.interceptors.request.use((config) => {
   return config;
 });
 
-axios.interceptors.response.use(
+axiosInstance.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status === 403 || error.response?.status === 401) {
@@ -24,3 +28,5 @@ axios.interceptors.response.use(
     return Promise.reject(error);
   },
 );
+
+export default axiosInstance;

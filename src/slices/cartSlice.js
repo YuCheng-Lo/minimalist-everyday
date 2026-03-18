@@ -1,8 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { showAsyncMessage } from "./messageSlice";
-import axios from "axios";
+import axiosInstance from "../services/axiosInstance";
 
-const url = import.meta.env.VITE_URL;
 const path = import.meta.env.VITE_PATH;
 
 export const cartSlice = createSlice({
@@ -85,7 +84,7 @@ export const getAsyncCart = createAsyncThunk(
   "cart/getAsyncCart",
   async (_, params) => {
     try {
-      const res = await axios.get(`${url}/api/${path}/cart`);
+      const res = await axiosInstance.get(`/api/${path}/cart`);
       return res.data.data;
     } catch (err) {
       return params.rejectWithValue(err.message);
@@ -101,7 +100,7 @@ export const addToCartAsync = createAsyncThunk(
         product_id: productId,
         qty,
       };
-      const res = await axios.post(`${url}/api/${path}/cart`, { data });
+      const res = await axiosInstance.post(`/api/${path}/cart`, { data });
 
       params.dispatch(
         showAsyncMessage({
@@ -131,7 +130,7 @@ export const removeCartAsync = createAsyncThunk(
   "cart/removeCartAsync",
   async (_, params) => {
     try {
-      await axios.delete(`${url}/api/${path}/carts`);
+      await axiosInstance.delete(`/api/${path}/carts`);
       params.dispatch(getAsyncCart());
     } catch (err) {
       params.dispatch(
@@ -151,7 +150,7 @@ export const removeCartItemAsync = createAsyncThunk(
   "cart/removeCartItemAsync",
   async (cartItemId, params) => {
     try {
-      await axios.delete(`${url}/api/${path}/cart/${cartItemId}`);
+      await axiosInstance.delete(`/api/${path}/cart/${cartItemId}`);
       params.dispatch(getAsyncCart());
     } catch (err) {
       params.dispatch(
@@ -179,7 +178,7 @@ export const updateCartItemQtyAsync = createAsyncThunk(
         qty,
       };
 
-      await axios.put(`${url}/api/${path}/cart/${cartItemId}`, {
+      await axiosInstance.put(`/api/${path}/cart/${cartItemId}`, {
         data,
       });
 

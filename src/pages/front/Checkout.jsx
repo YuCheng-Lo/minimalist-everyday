@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Oval } from "react-loader-spinner";
 import { useForm } from "react-hook-form";
-import axios from "axios";
+import axiosInstance from "../../services/axiosInstance";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getAsyncCart,
@@ -11,7 +11,6 @@ import {
 } from "../../slices/cartSlice";
 import { showAsyncMessage } from "../../slices/messageSlice";
 
-const url = import.meta.env.VITE_URL;
 const path = import.meta.env.VITE_PATH;
 
 const Checkout = () => {
@@ -37,7 +36,7 @@ const Checkout = () => {
 
   const onSubmit = async (data) => {
     try {
-      await axios.post(`${url}/api/${path}/order`, {
+      await axiosInstance.post(`$/api/${path}/order`, {
         data: {
           user: data,
           message: data.message,

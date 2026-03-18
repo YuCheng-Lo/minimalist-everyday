@@ -1,12 +1,10 @@
-import axios from "axios";
+import axiosInstance from "../services/axiosInstance";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { showAsyncMessage } from "../slices/messageSlice";
 import { useDispatch } from "react-redux";
 const Login = () => {
-  const url = import.meta.env.VITE_URL;
-
   const [tokenData, setTokenData] = useState(null);
 
   const navigate = useNavigate();
@@ -21,7 +19,7 @@ const Login = () => {
 
   const handleLogin = async (data) => {
     try {
-      const res = await axios.post(`${url}/admin/signin`, data);
+      const res = await axiosInstance.post(`/admin/signin`, data);
       const { token, expired } = res.data;
 
       setTokenData({ token, expired });
@@ -47,7 +45,7 @@ const Login = () => {
       // 有 Token 時才去檢查
       const checkAdminLogin = async () => {
         try {
-          await axios.post(`${url}/api/user/check`);
+          await axiosInstance.post(`/api/user/check`);
           navigate("/admin/products");
         } catch {
           // token 失效，清掉 cookie
@@ -68,7 +66,7 @@ const Login = () => {
 
       navigate("/admin/products");
     }
-  }, [tokenData, navigate, url]);
+  }, [tokenData, navigate]);
   return (
     <>
       <div className="d-flex flex-column justify-content-center align-items-center min-vh-100 login">

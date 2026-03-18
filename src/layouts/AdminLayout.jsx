@@ -2,7 +2,7 @@ import { NavLink, Outlet } from "react-router-dom";
 import minimalist_everyday_goods_logo from "../assets/images/minimalist_everyday_goods_logo.svg";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import axiosInstance from "../services/axiosInstance";
 import { Oval } from "react-loader-spinner";
 import { useDispatch } from "react-redux";
 import { showAsyncMessage } from "../slices/messageSlice";
@@ -15,7 +15,6 @@ const AdminLayout = () => {
   const dispatch = useDispatch();
   const [isAuth, setIsAuth] = useState(false);
   const navigate = useNavigate();
-  const url = import.meta.env.VITE_URL;
 
   useEffect(() => {
     //從 Cookie 取得 Token
@@ -32,7 +31,7 @@ const AdminLayout = () => {
 
     const checkAdminLogin = async () => {
       try {
-        await axios.post(`${url}/api/user/check`);
+        await axiosInstance.post(`/api/user/check`);
         setIsAuth(true);
       } catch {
         dispatch(
@@ -47,7 +46,7 @@ const AdminLayout = () => {
     };
 
     checkAdminLogin();
-  }, [navigate, url, dispatch]);
+  }, [navigate, dispatch]);
 
   if (!isAuth) {
     return (

@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import * as bootstrap from "bootstrap";
-import axios from "axios";
+import axiosInstance from "../../services/axiosInstance";
 import { Oval } from "react-loader-spinner";
 
 import Pagination from "../../components/Pagination";
@@ -10,7 +10,6 @@ import { useDispatch } from "react-redux";
 import { showAsyncMessage } from "../../slices/messageSlice";
 
 const AdminProducts = () => {
-  const url = import.meta.env.VITE_URL;
   const path = import.meta.env.VITE_PATH;
 
   const dispatch = useDispatch();
@@ -49,8 +48,8 @@ const AdminProducts = () => {
     async (page = 1) => {
       setIsLoading(true); //開始載入
       try {
-        const res = await axios.get(
-          `${url}/api/${path}/admin/products?page=${page}`,
+        const res = await axiosInstance.get(
+          `/api/${path}/admin/products?page=${page}`,
         );
         setProducts(res.data.products);
         setPagination(res.data.pagination);
@@ -67,7 +66,7 @@ const AdminProducts = () => {
         setIsLoading(false); //載入完成
       }
     },
-    [url, path, dispatch],
+    [path, dispatch],
   );
 
   useEffect(() => {
@@ -102,7 +101,10 @@ const AdminProducts = () => {
     formData.append("file-to-upload", file);
 
     try {
-      const res = await axios.post(`${url}/api/${path}/admin/upload`, formData);
+      const res = await axiosInstance.post(
+        `/api/${path}/admin/upload`,
+        formData,
+      );
 
       const imageUrl = res.data.imageUrl;
 
@@ -295,21 +297,21 @@ const AdminProducts = () => {
       let api = "";
       let method = "";
       if (modalMode === "create") {
-        api = `${url}/api/${path}/admin/product`;
+        api = `/api/${path}/admin/product`;
         method = "post";
-        await axios[method](api, {
+        await axiosInstance[method](api, {
           data: productData,
         });
       } else if (modalMode === "edit") {
-        api = `${url}/api/${path}/admin/product/${templateProduct.id}`;
+        api = `/api/${path}/admin/product/${templateProduct.id}`;
         method = "put";
-        await axios[method](api, {
+        await axiosInstance[method](api, {
           data: productData,
         });
       } else if (modalMode === "delete") {
-        api = `${url}/api/${path}/admin/product/${templateProduct.id}`;
+        api = `/api/${path}/admin/product/${templateProduct.id}`;
         method = "delete";
-        await axios[method](api);
+        await axiosInstance[method](api);
       }
 
       //成功後處理關閉modal、刷新產品列表

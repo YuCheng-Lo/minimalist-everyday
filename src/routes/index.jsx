@@ -8,12 +8,11 @@ import Checkout from "../pages/front/Checkout";
 import Login from "../pages/Login";
 import PrivacyPolicy from "../pages/PrivacyPolicy";
 import NotFound from "../pages/NotFound";
-import axios from "axios";
+import axiosInstance from "../services/axiosInstance";
 
 import AdminLayout from "../layouts/AdminLayout";
 import AdminProducts from "../pages/admin/AdminProducts";
 
-const url = import.meta.env.VITE_URL;
 const path = import.meta.env.VITE_PATH;
 
 const routes = [
@@ -34,8 +33,8 @@ const routes = [
         element: <ProductDetail />,
         errorElement: <ProductError />,
         loader: async ({ params }) => {
-          const res = await axios.get(
-            `${url}/api/${path}/product/${params.id}`,
+          const res = await axiosInstance.get(
+            `/api/${path}/product/${params.id}`,
           );
 
           if (!res.data.product) {
