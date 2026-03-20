@@ -3,6 +3,7 @@ import CartQtyControl from "../../components/CartQtyControl";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCartAsync } from "../../slices/cartSlice";
+import { Link } from "react-router-dom";
 
 const ProductDetail = () => {
   const product = useLoaderData();
@@ -15,6 +16,31 @@ const ProductDetail = () => {
 
   return (
     <div className="container pt-5 my-5">
+      <nav aria-label="breadcrumb" className="mb-4">
+        <ol className="breadcrumb">
+          <li className="breadcrumb-item">
+            <Link to="/" className="text-decoration-none">
+              首頁
+            </Link>
+          </li>
+          <li className="breadcrumb-item">
+            <Link to="/products" className="text-decoration-none">
+              所有產品
+            </Link>
+          </li>
+          <li className="breadcrumb-item">
+            <Link
+              to={`/products?category=${product.category}`}
+              className="text-decoration-none"
+            >
+              {product.category}
+            </Link>
+          </li>
+          <li className="breadcrumb-item active" aria-current="page">
+            {product.title}
+          </li>
+        </ol>
+      </nav>
       <div className="row g-5">
         <div className="col-12 col-md-6">
           <div className="sticky-top" style={{ top: "20px" }}>
@@ -24,7 +50,7 @@ const ProductDetail = () => {
               style={{ height: "500px", objectFit: "cover" }}
               alt={product.title}
             />
-            {/* 多圖預覽列表 */}
+
             <div className="d-flex mt-3 gap-2 overflow-auto pb-2">
               {[product.imageUrl, ...(product.imagesUrl || [])].map(
                 (img, index) => (
