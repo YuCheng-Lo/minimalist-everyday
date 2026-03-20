@@ -5,6 +5,8 @@ import ProductDetail from "../pages/front/ProductDetail";
 import ProductError from "../pages/front/ProductError";
 import Cart from "../pages/front/Cart";
 import Checkout from "../pages/front/Checkout";
+import Payment from "../pages/front/Payment";
+import CheckoutSuccess from "../pages/front/CheckoutSuccess";
 import Login from "../pages/Login";
 import PrivacyPolicy from "../pages/PrivacyPolicy";
 import NotFound from "../pages/NotFound";
@@ -48,6 +50,14 @@ const routes = [
       {
         path: "checkout",
         element: <Checkout />,
+      },
+      {
+        path: "payment/:orderId",
+        element: <Payment />,
+      },
+      {
+        path: "checkout-success/:orderId",
+        element: <CheckoutSuccess />,
       },
       {
         path: "login",
