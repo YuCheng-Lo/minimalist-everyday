@@ -15,6 +15,7 @@ const path = import.meta.env.VITE_PATH;
 
 const Checkout = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { carts, loading, loadingItemId, final_total, initialized } =
     useSelector((state) => state.cart);
 
@@ -36,7 +37,7 @@ const Checkout = () => {
 
   const onSubmit = async (data) => {
     try {
-      await axiosInstance.post(`$/api/${path}/order`, {
+      const res = await axiosInstance.post(`/api/${path}/order`, {
         data: {
           user: data,
           message: data.message,
@@ -57,6 +58,7 @@ const Checkout = () => {
 
       dispatch(getAsyncCart()); //送出訂單後，後端會清空購物車資料
       // navigate(`/thank-you/${res.data.orderId}`, { replace: true }); //購物成功導向頁尚待製作
+      navigate(`/payment/${res.data.orderId}`, { replace: true });
     } catch {
       dispatch(
         showAsyncMessage({
@@ -69,7 +71,6 @@ const Checkout = () => {
     }
   };
 
-  const navigate = useNavigate();
   useEffect(() => {
     if (!isFinishedCheckout && !loading && cartItemsCount === 0) {
       navigate("/products", { replace: true });
@@ -99,6 +100,26 @@ const Checkout = () => {
   return (
     <>
       <div className="container pt-5 my-5">
+        <div className="row g-3 justify-content-center py-4 mb-4">
+          {[
+            { step: 1, text: "建立訂單", active: true, done: false },
+            { step: 2, text: "付款交易", active: false, done: false },
+            { step: 3, text: "完成訂單", active: false, done: false },
+          ].map((s) => (
+            <div key={s.step} className="col-4 col-md-3">
+              <div
+                className={`card border-0 shadow-sm ${s.active ? "border-bottom border-primary border-4" : ""} ${s.done ? "opacity-50" : ""}`}
+              >
+                <div className="card-body p-2 p-md-3">
+                  <small className="d-block text-muted">Step {s.step}</small>
+                  <span className={`fw-bold ${s.active ? "text-primary" : ""}`}>
+                    {s.text}
+                  </span>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
         <div className="text-center">
           <h2>您的訂單內容</h2>
         </div>
@@ -144,7 +165,11 @@ const Checkout = () => {
                       }}
                       disabled={loadingItemId.remove === item.id}
                     >
-                      <i className="bi bi-trash fs-5"></i>
+                      {loadingItemId.remove === item.id ? (
+                        <span className="spinner-border spinner-border-sm"></span>
+                      ) : (
+                        <i className="bi bi-trash fs-5"></i>
+                      )}
                     </button>
                   </td>
                 </tr>
@@ -158,7 +183,7 @@ const Checkout = () => {
                 <span className="m-5">總計:</span>
               </td>
               <td>
-                <span>{final_total} </span>
+                <span>{final_total?.toLocaleString()} </span>
                 <span> 元</span>
               </td>
               <td></td>
