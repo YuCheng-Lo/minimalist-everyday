@@ -1,7 +1,7 @@
 import Pagination from "../../components/Pagination";
 import { frontendProductsApi } from "../../services/frontendProductService";
 import { useCallback, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link, useSearchParams } from "react-router-dom";
 import { addToCartAsync } from "../../slices/cartSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { showAsyncMessage } from "../../slices/messageSlice";
@@ -20,11 +20,15 @@ const Products = () => {
     total_pages: 1,
   });
 
+  const [searchParams, setSearchParams] = useSearchParams();
+  const category = searchParams.get("category") || "";
+  const page = Number(searchParams.get("page")) || 1;
+
   const getProducts = useCallback(
-    async (page = 1) => {
+    async (page = 1, categoryParam = "") => {
       setIsLoading(true); //開始載入
       try {
-        const res = await frontendProductsApi.getProducts(page);
+        const res = await frontendProductsApi.getProducts(page, categoryParam);
 
         setProducts(res.data.products);
         setPagination(res.data.pagination);
@@ -44,16 +48,19 @@ const Products = () => {
     [dispatch],
   );
 
-  const onPageChange = (page) => {
-    getProducts(page);
+  const onPageChange = (newPage) => {
+    // getProducts(page, category);
+    const params = {};
+
+    if (category) params.category = category;
+    if (newPage > 1) params.page = newPage;
+
+    setSearchParams(params);
   };
 
   useEffect(() => {
-    const init = async () => {
-      await getProducts();
-    };
-    init();
-  }, [getProducts]);
+    getProducts(page, category);
+  }, [getProducts, page, category]);
 
   if (isLoading) {
     return (
@@ -72,9 +79,54 @@ const Products = () => {
   }
   return (
     <div className="container pt-5 my-5">
-      <div className="text-center mb-5">
+      <nav aria-label="breadcrumb">
+        <ol className="breadcrumb">
+          <li className="breadcrumb-item">
+            <Link to="/" className="text-decoration-none">
+              首頁
+            </Link>
+          </li>
+          {category ? (
+            <>
+              <li className="breadcrumb-item">
+                <Link to="/products" className="text-decoration-none">
+                  所有產品
+                </Link>
+              </li>
+              <li className="breadcrumb-item active" aria-current="page">
+                {category}
+              </li>
+            </>
+          ) : (
+            <li className="breadcrumb-item active" aria-current="page">
+              所有產品
+            </li>
+          )}
+        </ol>
+      </nav>
+      <div className="text-center mb-2">
         <h1 className="fw-bold">商品列表</h1>
         <p className="text-muted">挑選你喜歡的商品</p>
+      </div>
+      <div className="mb-4 d-flex justify-content-start justify-content-md-center gap-2 flex-nowrap overflow-auto pb-2">
+        {["全部", "居家香氛", "居家生活", "文具用品", "3C配件"].map((cate) => (
+          <button
+            key={cate}
+            className={`btn ${(category === "" && cate === "全部") || category === cate ? "btn-secondary" : "btn-outline-secondary"}`}
+            onClick={() => {
+              const newCategory = cate === "全部" ? "" : cate;
+
+              const params = {};
+              if (newCategory) {
+                params.category = newCategory;
+              }
+
+              setSearchParams(params);
+            }}
+          >
+            {cate}
+          </button>
+        ))}
       </div>
       <div className="row g-4">
         {products.map((product) => {
