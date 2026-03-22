@@ -22,6 +22,43 @@ const AdminLayout = () => {
 
   const toggleNav = () => setIsNavExpanded(!isNavExpanded);
 
+  const handleLogout = async () => {
+    let isError = false;
+
+    try {
+      await axiosInstance.post("/logout");
+    } catch {
+      isError = true;
+
+      dispatch(
+        showAsyncMessage({
+          id: crypto.randomUUID(),
+          type: "danger",
+          title: "連線異常",
+          text: "無法連線至伺服器，已為您執行強制登出",
+        }),
+      );
+    } finally {
+      document.cookie =
+        "hexToken=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+
+      if (!isError) {
+        dispatch(
+          showAsyncMessage({
+            id: crypto.randomUUID(),
+            type: "success",
+            title: "已登出",
+            text: "您已成功登出",
+          }),
+        );
+      }
+
+      setIsAuth(false);
+      setIsNavExpanded(false);
+      navigate("/login");
+    }
+  };
+
   useEffect(() => {
     //從 Cookie 取得 Token
     const token = document.cookie
@@ -102,6 +139,13 @@ const AdminLayout = () => {
                   產品管理
                   <i className="bi bi-list-ul"></i>
                 </NavLink>
+                <button
+                  className="nav-link mx-3 fs-4 fw-medium d-flex align-items-center gap-2 text-danger border-0 bg-transparent"
+                  onClick={handleLogout}
+                >
+                  登出
+                  <i className="bi bi-box-arrow-right"></i>
+                </button>
               </div>
             </div>
           </nav>
