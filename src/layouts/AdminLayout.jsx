@@ -123,7 +123,7 @@ const AdminLayout = () => {
           </nav>
         </div>
       </header>
-      <main className="flex-grow-1 py-3">
+      <main className="flex-grow-1 d-flex flex-column">
         <Outlet />
       </main>
     </div>

@@ -64,7 +64,7 @@ const Products = () => {
 
   if (isLoading) {
     return (
-      <div className="d-flex flex-column align-items-center justify-content-center min-vh-100 ">
+      <div className="d-flex flex-column align-items-center justify-content-center flex-grow-1">
         <Oval
           height={60}
           width={60}
@@ -78,7 +78,7 @@ const Products = () => {
     );
   }
   return (
-    <div className="container">
+    <div className="container py-3">
       <nav aria-label="breadcrumb">
         <ol className="breadcrumb">
           <li className="breadcrumb-item">

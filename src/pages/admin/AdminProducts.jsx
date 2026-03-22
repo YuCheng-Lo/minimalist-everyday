@@ -369,7 +369,7 @@ const AdminProducts = () => {
   }
   return (
     <>
-      <div className="container">
+      <div className="container py-3">
         <div className="text-end mt-4">
           <button
             className="btn btn-primary"
