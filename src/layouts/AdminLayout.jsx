@@ -16,6 +16,12 @@ const AdminLayout = () => {
   const [isAuth, setIsAuth] = useState(false);
   const navigate = useNavigate();
 
+  const [isNavExpanded, setIsNavExpanded] = useState(false);
+
+  const closeNav = () => setIsNavExpanded(false);
+
+  const toggleNav = () => setIsNavExpanded(!isNavExpanded);
+
   useEffect(() => {
     //從 Cookie 取得 Token
     const token = document.cookie
@@ -66,9 +72,9 @@ const AdminLayout = () => {
 
   return (
     <div className="d-flex flex-column min-vh-100">
-      <header className=" fixed-top border-bottom bg-white">
+      <header className=" sticky-top border-bottom bg-white">
         <div className="container">
-          <nav className="navbar navbar-expand">
+          <nav className="navbar navbar-expand-lg">
             {/* Logo */}
             <NavLink to="/" className="navbar-brand">
               <img
@@ -82,23 +88,37 @@ const AdminLayout = () => {
               />
             </NavLink>
 
-            {/* Menu */}
+            <button
+              className="navbar-toggler"
+              type="button"
+              onClick={toggleNav}
+            >
+              <span className="navbar-toggler-icon"></span>
+            </button>
 
-            <div className="navbar-nav ms-auto">
-              <NavLink
-                className={({ isActive }) => getNavLinkClass(isActive)}
-                to="/"
-              >
-                首頁
-                <i className="bi bi-house-door"></i>
-              </NavLink>
-              <NavLink
-                className={({ isActive }) => getNavLinkClass(isActive)}
-                to="/admin/products"
-              >
-                產品管理
-                <i className="bi bi-list-ul"></i>
-              </NavLink>
+            {/* Menu */}
+            <div
+              className={`collapse navbar-collapse ${isNavExpanded ? "show" : ""}`}
+              id="navbarNav"
+            >
+              <div className="navbar-nav ms-auto">
+                <NavLink
+                  className={({ isActive }) => getNavLinkClass(isActive)}
+                  to="/"
+                  onClick={closeNav}
+                >
+                  首頁
+                  <i className="bi bi-house-door"></i>
+                </NavLink>
+                <NavLink
+                  className={({ isActive }) => getNavLinkClass(isActive)}
+                  to="/admin/products"
+                  onClick={closeNav}
+                >
+                  產品管理
+                  <i className="bi bi-list-ul"></i>
+                </NavLink>
+              </div>
             </div>
           </nav>
         </div>
