@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import * as bootstrap from "bootstrap";
 import axiosInstance from "../../services/axiosInstance";
-import { Oval } from "react-loader-spinner";
+import Loading from "../../components/Loading";
 
 import Pagination from "../../components/Pagination";
 import BootstrapModal from "../../components/BootstrapModal";
@@ -352,21 +352,7 @@ const AdminProducts = () => {
   };
 
   //確保打開頁面 or 刷新 時，不會因為檢查token而出現 登入畫面 閃一下進入 產品列表畫面
-  if (isLoading) {
-    return (
-      <div className="d-flex flex-column align-items-center justify-content-center min-vh-100 ">
-        <Oval
-          height={60}
-          width={60}
-          color="#748be7"
-          secondaryColor="#0c4169"
-          strokeWidth={5}
-          strokeWidthSecondary={5}
-        />
-        <p className="mt-2">商品內容載入中...</p>
-      </div>
-    );
-  }
+  if (isLoading) return <Loading text="商品內容載入中..." />;
   return (
     <>
       <div className="container py-3">

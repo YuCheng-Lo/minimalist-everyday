@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Oval } from "react-loader-spinner";
+import Loading from "../../components/Loading";
 import { useForm } from "react-hook-form";
 import axiosInstance from "../../services/axiosInstance";
 import { useDispatch, useSelector } from "react-redux";
@@ -77,21 +77,8 @@ const Checkout = () => {
     }
   }, [isFinishedCheckout, loading, cartItemsCount, navigate]);
 
-  if (loading) {
-    return (
-      <div className="d-flex flex-column align-items-center justify-content-center min-vh-100 ">
-        <Oval
-          height={60}
-          width={60}
-          color="#748be7"
-          secondaryColor="#0c4169"
-          strokeWidth={5}
-          strokeWidthSecondary={5}
-        />
-        <p className="mt-2">訂單內容處理中...</p>
-      </div>
-    );
-  }
+  if (loading) return <Loading text="訂單內容處理中..." />;
+
   if (cartItemsCount === 0) {
     // 避免渲染 Checkout 內容
     return null;

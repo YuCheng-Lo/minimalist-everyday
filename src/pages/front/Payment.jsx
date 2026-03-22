@@ -1,7 +1,7 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axiosInstance from "../../services/axiosInstance";
-import { Oval } from "react-loader-spinner";
+import Loading from "../../components/Loading";
 import { useDispatch } from "react-redux";
 import { showAsyncMessage } from "../../slices/messageSlice";
 
@@ -80,37 +80,9 @@ const Payment = () => {
     }
   };
 
-  if (isLoading) {
-    return (
-      <div className="d-flex flex-column align-items-center justify-content-center min-vh-100 ">
-        <Oval
-          height={60}
-          width={60}
-          color="#748be7"
-          secondaryColor="#0c4169"
-          strokeWidth={5}
-          strokeWidthSecondary={5}
-        />
-        <p className="mt-2">商品內容載入中...</p>
-      </div>
-    );
-  }
+  if (isLoading) return <Loading text="商品內容載入中..." />;
 
-  if (isPaying) {
-    return (
-      <div className="d-flex flex-column align-items-center justify-content-center min-vh-100 ">
-        <Oval
-          height={60}
-          width={60}
-          color="#748be7"
-          secondaryColor="#0c4169"
-          strokeWidth={5}
-          strokeWidthSecondary={5}
-        />
-        <p className="mt-2">交易進行中...</p>
-      </div>
-    );
-  }
+  if (isPaying) return <Loading text="交易進行中..." />;
   return (
     <div className="container py-3 text-center">
       <div className="row g-3 justify-content-center py-4 mb-4">

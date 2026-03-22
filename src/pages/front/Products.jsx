@@ -1,11 +1,11 @@
 import Pagination from "../../components/Pagination";
+import Loading from "../../components/Loading";
 import { frontendProductsApi } from "../../services/frontendProductService";
 import { useCallback, useEffect, useState } from "react";
 import { useNavigate, Link, useSearchParams } from "react-router-dom";
 import { addToCartAsync } from "../../slices/cartSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { showAsyncMessage } from "../../slices/messageSlice";
-import { Oval } from "react-loader-spinner";
 
 const Products = () => {
   const navigate = useNavigate();
@@ -62,21 +62,7 @@ const Products = () => {
     getProducts(page, category);
   }, [getProducts, page, category]);
 
-  if (isLoading) {
-    return (
-      <div className="d-flex flex-column align-items-center justify-content-center flex-grow-1">
-        <Oval
-          height={60}
-          width={60}
-          color="#748be7"
-          secondaryColor="#0c4169"
-          strokeWidth={5}
-          strokeWidthSecondary={5}
-        />
-        <p className="mt-2">商品內容載入中...</p>
-      </div>
-    );
-  }
+  if (isLoading) return <Loading text="商品內容載入中..." />;
   return (
     <div className="container py-3">
       <nav aria-label="breadcrumb">

@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import axiosInstance from "../../services/axiosInstance";
 import { showAsyncMessage } from "../../slices/messageSlice";
-import { Oval } from "react-loader-spinner";
+import Loading from "../../components/Loading";
 
 const CheckoutSuccess = () => {
   const path = import.meta.env.VITE_PATH;
@@ -49,21 +49,7 @@ const CheckoutSuccess = () => {
     checkOrder();
   }, [orderId, path, navigate, dispatch]);
 
-  if (isLoading) {
-    return (
-      <div className="d-flex flex-column align-items-center justify-content-center min-vh-100 ">
-        <Oval
-          height={60}
-          width={60}
-          color="#748be7"
-          secondaryColor="#0c4169"
-          strokeWidth={5}
-          strokeWidthSecondary={5}
-        />
-        <p className="mt-2">驗證訂單中...</p>
-      </div>
-    );
-  }
+  if (isLoading) return <Loading text="驗證訂單中..." />;
   return (
     <div className="container py-3 text-center">
       <div className="row g-3 justify-content-center py-4 mb-4">

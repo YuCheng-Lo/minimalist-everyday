@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Oval } from "react-loader-spinner";
+import Loading from "../../components/Loading";
 import CartQtyControl from "../../components/CartQtyControl";
 import ErrorView from "../../components/ErrorView";
 import { useDispatch, useSelector } from "react-redux";
@@ -22,22 +22,7 @@ const Cart = () => {
     }
   }, [dispatch, initialized]);
 
-  if (loading && !initialized) {
-    return (
-      <div className="d-flex flex-column align-items-center justify-content-center flex-grow-1">
-        {/* <div className="spinner-border" role="status" /> */}
-        <Oval
-          height={60}
-          width={60}
-          color="#748be7"
-          secondaryColor="#0c4169"
-          strokeWidth={5}
-          strokeWidthSecondary={5}
-        />
-        <p className="mt-2">購物車載入中...</p>
-      </div>
-    );
-  }
+  if (loading && !initialized) return <Loading text="購物車載入中..." />;
 
   if (error) {
     return (

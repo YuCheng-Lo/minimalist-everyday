@@ -3,7 +3,7 @@ import minimalist_everyday_goods_logo from "../assets/images/minimalist_everyday
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axiosInstance from "../services/axiosInstance";
-import { Oval } from "react-loader-spinner";
+import Loading from "../components/Loading";
 import { useDispatch } from "react-redux";
 import { showAsyncMessage } from "../slices/messageSlice";
 
@@ -53,22 +53,6 @@ const AdminLayout = () => {
 
     checkAdminLogin();
   }, [navigate, dispatch]);
-
-  if (!isAuth) {
-    return (
-      <div className="d-flex flex-column justify-content-center align-items-center min-vh-100 ">
-        <Oval
-          height={60}
-          width={60}
-          color="#748be7"
-          secondaryColor="#0c4169"
-          strokeWidth={5}
-          strokeWidthSecondary={5}
-        />
-        <p className="mt-2">權限驗證中...</p>
-      </div>
-    );
-  }
 
   return (
     <div className="d-flex flex-column min-vh-100">
@@ -124,7 +108,7 @@ const AdminLayout = () => {
         </div>
       </header>
       <main className="flex-grow-1 d-flex flex-column">
-        <Outlet />
+        {isAuth ? <Outlet /> : <Loading text="權限驗證中..." />}
       </main>
     </div>
   );
