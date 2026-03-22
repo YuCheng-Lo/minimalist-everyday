@@ -15,7 +15,7 @@ const ProductDetail = () => {
   const [mainImage, setMainImage] = useState(product.imageUrl);
 
   return (
-    <div className="container pt-5 my-5">
+    <div className="container">
       <nav aria-label="breadcrumb" className="mb-4">
         <ol className="breadcrumb">
           <li className="breadcrumb-item">

@@ -7,7 +7,7 @@ const ErrorView = ({
   buttonText = "重新載入",
 }) => {
   return (
-    <div className="container pt-5 my-5">
+    <div className="container">
       <div
         className="d-flex flex-column justify-content-center align-items-center text-center p-5"
         style={{ minHeight: "50vh" }}

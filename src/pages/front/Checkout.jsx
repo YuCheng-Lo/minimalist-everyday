@@ -99,7 +99,7 @@ const Checkout = () => {
 
   return (
     <>
-      <div className="container pt-5 my-5">
+      <div className="container">
         <div className="row g-3 justify-content-center py-4 mb-4">
           {[
             { step: 1, text: "建立訂單", active: true, done: false },

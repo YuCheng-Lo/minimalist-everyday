@@ -78,7 +78,7 @@ const Products = () => {
     );
   }
   return (
-    <div className="container pt-5 my-5">
+    <div className="container">
       <nav aria-label="breadcrumb">
         <ol className="breadcrumb">
           <li className="breadcrumb-item">

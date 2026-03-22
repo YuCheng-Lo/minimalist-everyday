@@ -107,7 +107,7 @@ const Layout = () => {
           </nav>
         </div>
       </header>
-      <main className="flex-grow-1 ">
+      <main className="flex-grow-1 py-3">
         {/* my-5 pt-5 */}
         <Outlet />
       </main>

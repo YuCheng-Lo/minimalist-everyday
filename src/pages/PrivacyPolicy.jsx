@@ -1,7 +1,7 @@
 const PrivacyPolicy = () => {
   return (
     <div
-      className="pt-5 my-5"
+      className="container"
       style={{ padding: "2rem", maxWidth: "800px", margin: "auto" }}
     >
       <h1>隱私政策</h1>

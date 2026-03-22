@@ -51,7 +51,7 @@ const Cart = () => {
 
   return (
     <>
-      <div className="container pt-5 my-5">
+      <div className="container">
         <div className="text-center">
           <h1>購物車</h1>
         </div>

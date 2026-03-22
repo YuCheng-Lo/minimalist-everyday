@@ -112,7 +112,7 @@ const Payment = () => {
     );
   }
   return (
-    <div className="container pt-5 my-5 text-center">
+    <div className="container text-center">
       <div className="row g-3 justify-content-center py-4 mb-4">
         {[
           { step: 1, text: "建立訂單", active: false, done: true },
