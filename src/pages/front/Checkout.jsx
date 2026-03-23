@@ -164,14 +164,10 @@ const Checkout = () => {
         </tbody>
         <tfoot>
           <tr>
-            <td colSpan={2}></td>
-            <td className="text-end">
-              <span className="m-5">總計:</span>
+            <td colSpan={3} className="text-end fw-bold">
+              總計:
             </td>
-            <td>
-              <span>{final_total?.toLocaleString()} </span>
-              <span> 元</span>
-            </td>
+            <td className="fw-bold">{final_total?.toLocaleString()} 元</td>
             <td></td>
           </tr>
         </tfoot>
