@@ -68,57 +68,85 @@ const Login = () => {
     }
   }, [tokenData, navigate]);
   return (
-    <div className="d-flex flex-column justify-content-center align-items-center flex-grow-1 login">
-      <div className="row justify-content-center">
-        <div className="col-12 text-center">
-          <h1 className="h3 mb-3 font-weight-normal">請先登入</h1>
-        </div>
-        <div className="col-8">
-          <form
-            id="form"
-            className="form-signin"
-            onSubmit={handleSubmit(handleLogin)}
-          >
-            <div className="form-floating mb-3">
-              <input
-                type="email"
-                className="form-control"
-                id="username"
-                placeholder="name@example.com"
-                {...register("username", {
-                  required: "Email為必填",
-                  pattern: { value: /^\S+@\S+$/i, message: "Email格式有誤" },
-                })}
-                autoFocus
-              />
-              <label htmlFor="username">Email address</label>
-              {loginErrors.username && (
-                <p className="text-danger">{loginErrors.username.message}</p>
-              )}
+    <div
+      className="bg-light d-flex align-items-center justify-content-center vh-100"
+      style={{ minHeight: "100vh" }}
+    >
+      <div className="container">
+        <div className="row justify-content-center">
+          <div className="col-md-6 col-lg-4">
+            {/* 登入卡片容器 */}
+            <div className="card border-0 shadow-lg rounded-4 p-4 p-sm-5">
+              <div className="text-center mb-4">
+                <h1 className="h2 fw-bold text-primary">拾光日常</h1>
+                <p className="text-muted">管理系統控制台</p>
+              </div>
+
+              <form
+                id="form"
+                className="form-signin"
+                onSubmit={handleSubmit(handleLogin)}
+              >
+                <div className="form-floating mb-3">
+                  <input
+                    type="email"
+                    className={`form-control ${loginErrors.username ? "is-invalid" : ""}`}
+                    id="username"
+                    placeholder="name@example.com"
+                    {...register("username", {
+                      required: "Email為必填",
+                      pattern: {
+                        value: /^\S+@\S+$/i,
+                        message: "Email格式有誤",
+                      },
+                    })}
+                    autoFocus
+                  />
+                  <label htmlFor="username">電子信箱</label>
+                  {loginErrors.username && (
+                    <div className="invalid-feedback text-start">
+                      {loginErrors.username.message}
+                    </div>
+                  )}
+                </div>
+
+                <div className="form-floating mb-4">
+                  <input
+                    type="password"
+                    className={`form-control ${loginErrors.password ? "is-invalid" : ""}`}
+                    id="password"
+                    placeholder="Password"
+                    {...register("password", {
+                      required: "密碼為必填",
+                      minLength: { value: 6, message: "密碼至少需要 6 碼" },
+                    })}
+                  />
+                  <label htmlFor="password">密碼</label>
+                  {loginErrors.password && (
+                    <div className="invalid-feedback text-start">
+                      {loginErrors.password.message}
+                    </div>
+                  )}
+                </div>
+
+                <button
+                  className="btn btn-primary w-100 py-3 mb-3 fw-bold shadow-sm"
+                  type="submit"
+                  style={{ borderRadius: "10px", transition: "all 0.3s" }}
+                >
+                  安全登入
+                </button>
+              </form>
+
+              <div className="text-center mt-3">
+                <p className="small text-muted mb-0">
+                  &copy; 2026 - 拾光日常後台管理
+                </p>
+              </div>
             </div>
-            <div className="form-floating">
-              <input
-                type="password"
-                className="form-control"
-                id="password"
-                placeholder="Password"
-                {...register("password", {
-                  required: "密碼為必填",
-                  minLength: { value: 6, message: "密碼至少需要 6 碼" },
-                })}
-              />
-              <label htmlFor="password">Password</label>
-              {loginErrors.password && (
-                <p className="text-danger">{loginErrors.password.message}</p>
-              )}
-            </div>
-            <button className="btn btn-lg btn-primary w-100 mt-3" type="submit">
-              登入
-            </button>
-          </form>
+          </div>
         </div>
       </div>
-      <p className="mt-5 mb-3 text-muted">&copy; 2026~∞ - HexSchool</p>
     </div>
   );
 };
