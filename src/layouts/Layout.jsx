@@ -110,16 +110,27 @@ const Layout = () => {
       <main className="flex-grow-1 d-flex flex-column">
         <Outlet />
       </main>
-      <footer className="mt-auto py-3 text-center bg-secondary text-white">
-        <p className="mt-3">
-          本網站僅使用 cookie
-          儲存登入狀態，不涉及追蹤與廣告。如需更多資訊，請參閱{" "}
-          <Link className="text-white" to="/privacy-policy">
-            隱私政策
-          </Link>
-          。
-        </p>
-        <p>© 2026 Cheng. 本網頁僅為作品展示用途。</p>
+      <footer className="mt-auto py-4 text-center bg-secondary text-white">
+        <div className="container px-4">
+          <p
+            className="mb-2 lh-base"
+            style={{ fontSize: "0.9rem", opacity: 0.85 }}
+          >
+            本網站僅使用 cookie 儲存登入狀態，不涉及追蹤與廣告。
+            <br className="d-sm-none" />
+            如需更多資訊，請參閱{" "}
+            <Link
+              className="text-white text-decoration-underline"
+              to="/privacy-policy"
+            >
+              隱私政策
+            </Link>
+            。
+          </p>
+          <p className="mb-0" style={{ fontSize: "0.8rem", opacity: 0.7 }}>
+            © 2026 Cheng. 本網頁僅為作品展示用途。
+          </p>
+        </div>
       </footer>
     </div>
   );
