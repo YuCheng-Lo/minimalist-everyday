@@ -36,117 +36,113 @@ const Cart = () => {
 
   return (
     <div className="container py-3">
-      <div className="text-center">
-        <h1>購物車</h1>
-      </div>
-      <div className="mt-4 text-end">
+      <div className="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-3">
+        <h1 className="h2 fw-bold mb-0">購物車清單</h1>
         <button
           type="button"
-          className="btn btn-danger"
+          className="btn btn-outline-danger btn-sm"
           onClick={() => dispatch(removeCartAsync())}
           disabled={carts.length === 0}
         >
-          清空購物車
+          <i className="bi bi-trash3 me-1"></i> 清空購物車
         </button>
       </div>
-      <table className="table mt-3 align-middle">
-        <thead>
-          <tr>
-            <th></th>
-            <th>商品圖片</th>
-            <th>品名</th>
-            <th>數量</th>
-            <th>小計</th>
-          </tr>
-        </thead>
-        <tbody>
-          {carts.length > 0 ? (
-            carts.map((item) => {
-              return (
-                <tr key={item.id}>
-                  <td>
-                    <button
-                      type="button"
-                      // className="btn btn-outline-danger d-inline-flex align-items-center gap-2"
-                      className="btn btn-link text-danger p-0 border-0"
-                      onClick={() => {
-                        dispatch(removeCartItemAsync(item.id));
-                      }}
-                      disabled={loadingItemId.remove === item.id}
-                    >
-                      {loadingItemId.remove === item.id ? (
-                        <span>處理中...</span>
-                      ) : (
-                        <i className="bi bi-trash fs-5"></i>
-                      )}
-                    </button>
-                  </td>
-                  <td>
-                    <img
-                      src={item.product.imageUrl}
-                      alt={item.product.title}
-                      className="rounded-2 shadow-sm"
-                      style={{
-                        width: "80px",
-                        height: "80px",
-                        objectFit: "cover",
-                      }}
-                    />
-                  </td>
-                  <td>{item.product.title}</td>
-                  <td>
-                    <CartQtyControl
-                      qty={item.qty}
-                      loading={loadingItemId.update === item.id}
-                      onIncrease={() => {
-                        dispatch(
-                          updateCartItemQtyAsync({
-                            cartItemId: item.id,
-                            productId: item.product.id,
-                            qty: item.qty + 1,
-                          }),
-                        );
-                      }}
-                      onDecrease={() => {
-                        dispatch(
-                          updateCartItemQtyAsync({
-                            cartItemId: item.id,
-                            productId: item.product.id,
-                            qty: item.qty - 1,
-                          }),
-                        );
-                      }}
-                    />
-                  </td>
-                  <td>
-                    <span>{item.total} </span>
-                    <span> 元</span>
-                  </td>
-                </tr>
-              );
-            })
-          ) : (
-            <tr>
-              <td colSpan={5}>
-                <h4 className="text-center text-muted">購物車尚未有任何商品</h4>
-              </td>
-            </tr>
-          )}
-        </tbody>
-        {carts.length > 0 && (
-          <tfoot>
-            <tr>
-              <td colSpan={4} className="text-end">
-                <span className="m-5">總計:</span>
-              </td>
-              <td>
-                <span>{final_total} </span>
-                <span> 元</span>
-              </td>
-            </tr>
-          </tfoot>
+
+      <div className="mt-4">
+        <div className="d-none d-md-flex row border-bottom pb-2 fw-bold text-muted px-2">
+          <div className="col-md-1"></div>
+          <div className="col-md-2">商品圖片</div>
+          <div className="col-md-4">品名</div>
+          <div className="col-md-3 text-center">數量</div>
+          <div className="col-md-2 text-end">小計</div>
+        </div>
+
+        {carts.length > 0 ? (
+          carts.map((item) => (
+            <div
+              key={item.id}
+              className="row align-items-center py-3 border-bottom mx-0 gx-2"
+            >
+              <div className="col-2 col-md-1 text-center">
+                <button
+                  type="button"
+                  className="btn btn-link text-danger p-0 border-0"
+                  onClick={() => dispatch(removeCartItemAsync(item.id))}
+                  disabled={loadingItemId.remove === item.id}
+                >
+                  {loadingItemId.remove === item.id ? (
+                    <span className="spinner-border spinner-border-sm"></span>
+                  ) : (
+                    <i className="bi bi-x-lg fs-5"></i>
+                  )}
+                </button>
+              </div>
+
+              <div className="col-4 col-md-2">
+                <img
+                  src={item.product.imageUrl}
+                  alt={item.product.title}
+                  className="rounded img-fluid shadow-sm"
+                  style={{ aspectRatio: "1/1", objectFit: "cover" }}
+                />
+              </div>
+
+              <div className="col-5 col-md-4">
+                <div className="fw-bold mb-1 text-truncate">
+                  {item.product.title}
+                </div>
+                <div className="text-muted small d-md-none">
+                  單價：NT$ {item.product.price}
+                </div>
+              </div>
+
+              <div className="col-8 offset-2 col-md-3 offset-md-0 mt-3 mt-md-0">
+                <div className="d-flex justify-content-center">
+                  <CartQtyControl
+                    qty={item.qty}
+                    loading={loadingItemId.update === item.id}
+                    onIncrease={() => {
+                      dispatch(
+                        updateCartItemQtyAsync({
+                          cartItemId: item.id,
+                          productId: item.product.id,
+                          qty: item.qty + 1,
+                        }),
+                      );
+                    }}
+                    onDecrease={() => {
+                      dispatch(
+                        updateCartItemQtyAsync({
+                          cartItemId: item.id,
+                          productId: item.product.id,
+                          qty: item.qty - 1,
+                        }),
+                      );
+                    }}
+                  />
+                </div>
+              </div>
+
+              <div className="col-3 col-md-2 text-end mt-3 mt-md-0 fw-bold text-primary text-nowrap">
+                <span className="d-md-none small text-muted fw-normal me-1">
+                  小計:
+                </span>
+                ${item.total}
+              </div>
+            </div>
+          ))
+        ) : (
+          <div className="text-center py-5">購物車空空的...</div>
         )}
-      </table>
+
+        {carts.length > 0 && (
+          <div className="text-end py-4 px-2">
+            <span className="h5 me-3 text-muted">總計金額</span>
+            <span className="h3 fw-bold text-danger">NT$ {final_total}</span>
+          </div>
+        )}
+      </div>
+
       {carts.length > 0 ? (
         <div className="text-center mt-5">
           <Link
