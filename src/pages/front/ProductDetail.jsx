@@ -43,11 +43,11 @@ const ProductDetail = () => {
       </nav>
       <div className="row g-5">
         <div className="col-12 col-md-6">
-          <div className="sticky-top" style={{ top: "20px" }}>
+          <div className="sticky-md-top" style={{ top: "80px" }}>
             <img
               src={mainImage}
               className="img-fluid rounded shadow-sm w-100"
-              style={{ height: "500px", objectFit: "cover" }}
+              style={{ height: "400px", objectFit: "cover" }}
               alt={product.title}
             />
 

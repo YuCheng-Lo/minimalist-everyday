@@ -27,7 +27,10 @@ const Layout = () => {
   };
   return (
     <div className="d-flex flex-column min-vh-100">
-      <header className=" sticky-top border-bottom bg-white">
+      <header
+        className=" sticky-top border-bottom bg-white"
+        style={{ zIndex: 1050 }}
+      >
         <div className="container">
           <nav className="navbar navbar-expand-lg">
             {/* Logo */}
