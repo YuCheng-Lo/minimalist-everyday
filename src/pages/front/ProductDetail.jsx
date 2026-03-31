@@ -17,8 +17,8 @@ const ProductDetail = () => {
   return (
     <div className="container py-3">
       <nav aria-label="breadcrumb" className="mb-4">
-        <ol className="breadcrumb">
-          <li className="breadcrumb-item">
+        <ol className="breadcrumb flex-nowrap overflow-hidden">
+          <li className="breadcrumb-item text-truncate">
             <Link to="/" className="text-decoration-none">
               首頁
             </Link>
@@ -41,17 +41,20 @@ const ProductDetail = () => {
           </li>
         </ol>
       </nav>
-      <div className="row g-5">
+      <div className="row g-4 g-md-5 mx-0">
         <div className="col-12 col-md-6">
           <div className="sticky-md-top" style={{ top: "80px" }}>
             <img
               src={mainImage}
               className="img-fluid rounded shadow-sm w-100"
-              style={{ height: "400px", objectFit: "cover" }}
+              style={{ maxHeight: "400px", objectFit: "cover" }}
               alt={product.title}
             />
 
-            <div className="d-flex mt-3 gap-2 overflow-auto pb-2">
+            <div
+              className="d-flex mt-3 gap-2 overflow-x-auto pb-2"
+              style={{ maxWidth: "100%" }}
+            >
               {[product.imageUrl, ...(product.imagesUrl || [])].map(
                 (img, index) => (
                   <img
