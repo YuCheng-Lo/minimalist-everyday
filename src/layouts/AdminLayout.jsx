@@ -152,7 +152,13 @@ const AdminLayout = () => {
         </div>
       </header>
       <main className="flex-grow-1 d-flex flex-column">
-        {isAuth ? <Outlet /> : <Loading text="權限驗證中..." />}
+        {isAuth ? (
+          <Outlet />
+        ) : (
+          <div className="position-fixed top-0 start-0 w-100 vh-100 d-flex justify-content-center align-items-center bg-white">
+            <Loading text="權限驗證中..." />
+          </div>
+        )}
       </main>
     </div>
   );
