@@ -3,7 +3,7 @@ const CartQtyControl = ({ qty, onIncrease, onDecrease, loading = false }) => {
     <div className="input-group" style={{ width: "150px" }}>
       <button
         type="button"
-        className="btn btn-outline-secondary"
+        className={`btn btn-outline-secondary ${qty === 1 ? "opacity-50" : ""}`}
         onClick={onDecrease}
         disabled={loading || qty === 1}
       >
