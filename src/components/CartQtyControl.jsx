@@ -5,7 +5,7 @@ const CartQtyControl = ({ qty, onIncrease, onDecrease, loading = false }) => {
         type="button"
         className="btn btn-outline-secondary"
         onClick={onDecrease}
-        disabled={loading}
+        disabled={loading || qty === 1}
       >
         {loading ? "..." : <i className="bi bi-dash"></i>}
       </button>
