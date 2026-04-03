@@ -1,6 +1,6 @@
 import Loading from "../../components/Loading";
 import Pagination from "../../components/Pagination";
-import BootstrapModal from "../../components/BootstrapModal";
+import AdminProductModal from "../../components/AdminProductModal";
 import { useProductModal } from "../../hooks/useProductModal";
 import ProductTable from "../../components/ProductTable";
 import { useAdminProducts } from "../../hooks/useAdminProducts";
@@ -47,7 +47,7 @@ const AdminProducts = () => {
         )}
       </div>
       {/*將 productModalRef 傳進去抓取 DOM*/}
-      <BootstrapModal
+      <AdminProductModal
         ref={productModalRef}
         closeModal={closeModal}
         templateProduct={templateProduct}
