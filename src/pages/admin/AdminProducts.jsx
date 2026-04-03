@@ -8,6 +8,7 @@ import BootstrapModal from "../../components/BootstrapModal";
 
 import { useDispatch } from "react-redux";
 import { showAsyncMessage } from "../../slices/messageSlice";
+import { formatPrice } from "../../utils/formatPrice";
 
 const AdminProducts = () => {
   const path = import.meta.env.VITE_PATH;
@@ -389,8 +390,8 @@ const AdminProducts = () => {
                     <tr key={product.id}>
                       <td>{product.category}</td>
                       <td>{product.title}</td>
-                      <td>{product.origin_price}</td>
-                      <td>{product.price}</td>
+                      <td>{formatPrice(product.origin_price)}</td>
+                      <td>{formatPrice(product.price)}</td>
                       <td>{product.stock}</td>
                       <td>
                         {product.is_enabled ? (

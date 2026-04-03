@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Loading from "../../components/Loading";
 import { useForm } from "react-hook-form";
 import axiosInstance from "../../services/axiosInstance";
+import { formatPrice } from "../../utils/formatPrice";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getAsyncCart,
@@ -138,8 +139,7 @@ const Checkout = () => {
                 <td>{item.product.title}</td>
                 <td>{item.qty}</td>
                 <td>
-                  <span>{item.total} </span>
-                  <span> 元</span>
+                  <span>NT$ {formatPrice(item.total)} </span>
                 </td>
                 <td>
                   <button
@@ -167,7 +167,9 @@ const Checkout = () => {
             <td colSpan={3} className="text-end fw-bold">
               總計:
             </td>
-            <td className="fw-bold">{final_total?.toLocaleString()} 元</td>
+            <td className="fw-bold fs-4 text-danger">
+              NT$ {formatPrice(final_total)}
+            </td>
             <td></td>
           </tr>
         </tfoot>

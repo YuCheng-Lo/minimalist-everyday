@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import Loading from "../../components/Loading";
 import CartQtyControl from "../../components/CartQtyControl";
 import ErrorView from "../../components/ErrorView";
+import { formatPrice } from "../../utils/formatPrice";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getAsyncCart,
@@ -92,7 +93,7 @@ const Cart = () => {
                   {item.product.title}
                 </div>
                 <div className="text-muted small d-md-none">
-                  單價：NT$ {item.product.price}
+                  單價：NT$ {formatPrice(item.product.price)}
                 </div>
               </div>
 
@@ -127,7 +128,7 @@ const Cart = () => {
                 <span className="d-md-none small text-muted fw-normal me-1">
                   小計:
                 </span>
-                ${item.total}
+                NT${formatPrice(item.total)}
               </div>
             </div>
           ))
@@ -138,7 +139,9 @@ const Cart = () => {
         {carts.length > 0 && (
           <div className="text-end py-4 px-2">
             <span className="h5 me-3 text-muted">總計金額</span>
-            <span className="h3 fw-bold text-danger">NT$ {final_total}</span>
+            <span className="h3 fw-bold text-danger">
+              NT$ {formatPrice(final_total)}
+            </span>
           </div>
         )}
       </div>

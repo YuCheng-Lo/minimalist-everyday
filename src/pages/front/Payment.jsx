@@ -4,6 +4,7 @@ import axiosInstance from "../../services/axiosInstance";
 import Loading from "../../components/Loading";
 import { useDispatch } from "react-redux";
 import { showAsyncMessage } from "../../slices/messageSlice";
+import { formatPrice } from "../../utils/formatPrice";
 
 const Payment = () => {
   const path = import.meta.env.VITE_PATH;
@@ -149,7 +150,7 @@ const Payment = () => {
                             </small>
                           </td>
                           <td className="text-end pe-4 fw-bold">
-                            NT$ {item?.total?.toLocaleString()}
+                            NT$ {formatPrice(item.total)}
                           </td>
                         </tr>
                       ))}
@@ -159,7 +160,7 @@ const Payment = () => {
                       <td colSpan="3" className="text-end pe-4 py-3">
                         <span className="text-muted me-2">訂單總金額</span>
                         <span className="h4 fw-bold text-danger mb-0">
-                          NT$ {orderData?.total?.toLocaleString()}
+                          NT$ {formatPrice(orderData.total)}
                         </span>
                       </td>
                     </tr>

@@ -4,6 +4,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { frontendProductsApi } from "../../../services/frontendProductService";
 import { useDispatch } from "react-redux";
 import { showAsyncMessage } from "../../../slices/messageSlice";
+import { formatPrice } from "../../../utils/formatPrice";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -128,10 +129,10 @@ const Home = () => {
                           styles["popular-products__item-origin-price"]
                         }
                       >
-                        NT${product.origin_price}
+                        NT${formatPrice(product.origin_price)}
                       </p>
                       <p className={styles["popular-products__item-price"]}>
-                        NT${product.price}
+                        NT${formatPrice(product.price)}
                       </p>
                     </div>
                   </Link>

@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCartAsync } from "../../slices/cartSlice";
 import { Link } from "react-router-dom";
+import { formatPrice } from "../../utils/formatPrice";
 
 const ProductDetail = () => {
   const product = useLoaderData();
@@ -82,9 +83,11 @@ const ProductDetail = () => {
 
           <div className="mb-3">
             <span className=" text-muted me-2">
-              <del>NT$ {product.origin_price}</del>
+              <del>NT$ {formatPrice(product.origin_price)}</del>
             </span>
-            <span className="h4 text-danger fw-bold">NT$ {product.price}</span>
+            <span className="h4 text-danger fw-bold">
+              NT$ {formatPrice(product.price)}
+            </span>
           </div>
 
           <p className="mb-2">
