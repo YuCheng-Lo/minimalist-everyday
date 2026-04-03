@@ -108,7 +108,7 @@ const Payment = () => {
       </div>
 
       <div className="row justify-content-center g-4">
-        <div className="col-12 col-lg-7">
+        <div className="col-lg-7">
           <div className="card border-0 shadow-sm h-100">
             <div className="card-header bg-white py-3 border-bottom-0">
               <h3 className="h5 mb-0 fw-bold text-primary">訂單商品內容</h3>
@@ -171,7 +171,7 @@ const Payment = () => {
           </div>
         </div>
 
-        <div className="col-12 col-lg-5">
+        <div className="col-lg-5">
           <div className="card border-0 shadow-sm h-100">
             <div className="card-header bg-white py-3 border-bottom-0">
               <h3 className="h5 mb-0 fw-bold text-primary">配送資訊</h3>

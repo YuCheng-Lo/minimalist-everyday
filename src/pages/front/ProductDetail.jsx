@@ -43,7 +43,7 @@ const ProductDetail = () => {
         </ol>
       </nav>
       <div className="row g-4 g-md-5 mx-0">
-        <div className="col-12 col-md-6">
+        <div className="col-md-6">
           <div className="sticky-md-top" style={{ top: "80px" }}>
             <img
               src={mainImage}
@@ -76,7 +76,7 @@ const ProductDetail = () => {
           </div>
         </div>
 
-        <div className="col-12 col-md-6">
+        <div className="col-md-6">
           <h2 className="fw-bold mb-3">{product.title}</h2>
 
           <p className="text-muted">{product.description}</p>
