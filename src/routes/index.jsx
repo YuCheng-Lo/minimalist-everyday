@@ -13,6 +13,7 @@ import NotFound from "../pages/NotFound";
 
 import AdminLayout from "../layouts/AdminLayout";
 import AdminProducts from "../pages/admin/AdminProducts";
+import AdminOrders from "../pages/admin/AdminOrders";
 
 import { frontendProductsApi } from "../services/frontendProductService";
 
@@ -76,6 +77,10 @@ const routes = [
       {
         path: "products",
         element: <AdminProducts />,
+      },
+      {
+        path: "orders",
+        element: <AdminOrders />,
       },
     ],
   },

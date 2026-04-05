@@ -139,6 +139,14 @@ const AdminLayout = () => {
                   產品管理
                   <i className="bi bi-list-ul"></i>
                 </NavLink>
+                <NavLink
+                  className={({ isActive }) => getNavLinkClass(isActive)}
+                  to="/admin/orders"
+                  onClick={closeNav}
+                >
+                  訂單管理
+                  <i className="bi bi-receipt"></i>
+                </NavLink>
                 <button
                   className="nav-link mx-3 fs-4 fw-medium d-flex align-items-center gap-2 text-danger border-0 bg-transparent"
                   onClick={handleLogout}
